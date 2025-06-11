@@ -8,23 +8,16 @@
 import SwiftUI
 
 struct FavouriteCountriesView: View {
-        
-    @State private var path: [Country] = []
     
-    // Sample data
-    let countries: [Country] = [
-            Country(id: "1", name: "India", capital: "New Delhi", currencies: [Currency(code: "INR", name: "Rupee", symbol: "₹")], flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_the_Taliban.svg/320px-Flag_of_the_Taliban.svg.png"),
-            Country(id: "2", name: "USA", capital: "Washington, D.C.", currencies: [Currency(code: "USD", name: "Dollar", symbol: "$")], flag: nil),
-            Country(id: "3", name: "Japan", capital: "Tokyo", currencies: [Currency(code: "JPY", name: "Yen", symbol: "¥")], flag: nil)
-        ]
+    @State private var path: [Route] = []
+    @StateObject private var viewModel = CountryListViewModel()
     
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
-                List(countries, id: \.self) { country in
-                    // Step 2: Navigate on tap
+                List(viewModel.countries, id: \.self) { country in
                     Button {
-                        path.append(country)
+                        path.append(.details(country))
                     } label: {
                         FavouriteCountrieCardCell(country: country)
                     }
@@ -33,16 +26,32 @@ struct FavouriteCountriesView: View {
                 Spacer()
                 searchButtonView
             }
-            .navigationDestination(for: Country.self) { country in
-                DetailsView(country: country)
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .details(let country):
+                    DetailsView(country: country)
+                case .search:
+                    CountrySearchView(viewModel: viewModel, path: $path)
+                }
             }
-            .navigationTitle("Favourite Countries")
+            .navigationTitle(Strings.NavigationTitle.favourite)
+            .onAppear {
+                Task {
+                    await viewModel.fetchCountries()
+                }
+            }
+            .overlay {
+                if viewModel.isLoading && viewModel.countries.count == 0 {
+                    Color.black.opacity(0.25).ignoresSafeArea()
+                    ProgressView(Strings.Placeholder.loading)
+                }
+            }
         }
     }
     
     private var searchButtonView: some View {
         Button {
-           // path.append("search")
+            path.append(.search)
         } label: {
             HStack {
                 Text("Add")
@@ -54,10 +63,7 @@ struct FavouriteCountriesView: View {
             .padding(.horizontal,20)
         }
         .buttonStyle(.plain)
-        //.disabled(viewModel.allCountries.isEmpty)
+        .disabled(viewModel.countries.isEmpty)
     }
 }
 
-#Preview {
-    FavouriteCountriesView()
-}

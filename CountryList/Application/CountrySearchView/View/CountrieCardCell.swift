@@ -1,13 +1,13 @@
 //
-//  FavouriteCountrieCardCell.swift
+//  CountrieCardCell.swift
 //  CountryList
 //
-//  Created by Neel on 10/06/25.
+//  Created by Neel on 11/06/25.
 //
 
 import SwiftUI
 
-struct FavouriteCountrieCardCell: View {
+struct CountrieCardCell: View {
     let country: Country
     var body: some View {
         HStack {
@@ -21,7 +21,7 @@ struct FavouriteCountrieCardCell: View {
             Button(action: {
                 
             }) {
-                Image(systemName: "minus.circle.fill")
+                Image(systemName: "plus.circle.fill")
                     .foregroundColor(.black)
             }
         }

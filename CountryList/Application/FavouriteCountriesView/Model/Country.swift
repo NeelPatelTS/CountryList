@@ -7,13 +7,19 @@
 
 import Foundation
 
+import Foundation
+
 struct Country: Identifiable, Codable, Equatable, Hashable {
-    let id: String
+    var id: String { name } 
     let name: String
     let capital: String?
+    let flags: Flag?
     let currencies: [Currency]?
-    let flag: String?
-    
+}
+
+struct Flag: Codable, Equatable, Hashable {
+    let svg: String?
+    let png: String?
 }
 
 struct Currency: Codable, Equatable, Hashable {
@@ -21,3 +27,4 @@ struct Currency: Codable, Equatable, Hashable {
     let name: String?
     let symbol: String?
 }
+
