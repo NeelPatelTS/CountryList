@@ -5,8 +5,8 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="isFavourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="currencies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDCurrency" inverseName="toCountry" inverseEntity="CDCurrency"/>
-        <relationship name="flags" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDFlag" inverseName="toCountry" inverseEntity="CDFlag"/>
+        <relationship name="currencies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDCurrency" inverseName="toCountry" inverseEntity="CDCurrency"/>
+        <relationship name="flags" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDFlag" inverseName="toCountry" inverseEntity="CDFlag"/>
     </entity>
     <entity name="CDCurrency" representedClassName="CDCurrency" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String"/>

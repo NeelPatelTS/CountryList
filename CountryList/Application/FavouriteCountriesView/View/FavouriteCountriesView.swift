@@ -11,15 +11,25 @@ struct FavouriteCountriesView: View {
     
     @State private var path: [Route] = []
     @StateObject private var viewModel = CountryListViewModel()
+    @State private var showError = false
     
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
-                List(viewModel.countries, id: \.self) { country in
+                List(viewModel.favcountries, id: \.self) { country in
                     Button {
                         path.append(.details(country))
                     } label: {
-                        FavouriteCountrieCardCell(country: country)
+                        HStack {
+                            FavouriteCountrieCardCell(country: country)
+                            Button(action: {
+                                viewModel.toggleFavorite(for: country)
+                            }) {
+                                Image(systemName: "minus.circle.fill" )
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        
                     }
                 }
                 .listStyle(.plain)
@@ -38,14 +48,27 @@ struct FavouriteCountriesView: View {
             .onAppear {
                 Task {
                     await viewModel.fetchCountries()
+                    viewModel.getAllCountries()
+                    viewModel.getFavCountries()
                 }
             }
             .overlay {
-                if viewModel.isLoading && viewModel.countries.count == 0 {
+                if viewModel.isLoading && viewModel.favcountries.count == 0 {
                     Color.black.opacity(0.25).ignoresSafeArea()
                     ProgressView(Strings.Placeholder.loading)
                 }
             }
+            .onReceive(viewModel.$errorMessage) { message in
+                // If message is not nil, show the alert
+                showError = message != nil
+            }
+            .alert("Error", isPresented: $showError, actions: {
+                Button("OK", role: .cancel) {
+                    viewModel.errorMessage = nil  // clear after dismiss
+                }
+            }, message: {
+                Text(viewModel.errorMessage ?? "Unknown error")
+            })
         }
     }
     
@@ -63,7 +86,6 @@ struct FavouriteCountriesView: View {
             .padding(.horizontal,20)
         }
         .buttonStyle(.plain)
-        .disabled(viewModel.countries.isEmpty)
     }
 }
 

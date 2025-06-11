@@ -15,19 +15,28 @@ struct CountrySearchView: View {
     
     var filteredCountries: [Country] {
         if searchText.isEmpty {
-            return viewModel.countries
+            return viewModel.allCountries
         } else {
-            return viewModel.countries.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return viewModel.allCountries.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
     
     var body: some View {
         List(filteredCountries) { country in
-            
             Button {
                 path.append(.details(country))
             } label: {
-                CountrieCardCell(country: country)
+                HStack {
+                    FavouriteCountrieCardCell(country: country)
+                    Button(action: {
+                        viewModel.toggleFavorite(for: country)
+                    }) {
+                        let isFavourite = viewModel.isAlreadyFavourite(country)
+                        Image(systemName: isFavourite ? "minus.circle.fill" : "plus.circle.fill")
+                            .foregroundColor(isFavourite ? .red : .black)
+                    }
+                }
+                
             }
         }.listStyle(.plain)
             .navigationTitle("Countries")

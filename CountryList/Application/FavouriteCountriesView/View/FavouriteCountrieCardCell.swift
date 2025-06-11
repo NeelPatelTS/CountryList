@@ -18,12 +18,6 @@ struct FavouriteCountrieCardCell: View {
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.leading)
             Spacer()
-            Button(action: {
-                
-            }) {
-                Image(systemName: "minus.circle.fill")
-                    .foregroundColor(.black)
-            }
         }
     }
 }
