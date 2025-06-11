@@ -20,6 +20,7 @@ enum APIError: Error, Equatable {
     case forbidden
     case notFound
     case invalidResponse
+    case unowned
 }
 
 extension APIError {
@@ -51,6 +52,8 @@ extension APIError {
             return "The resource could not be found."
         case .invalidResponse:
             return "request failed due to invalid response"
+        case .unowned:
+            return "Unknown error"
         }
     }
 }

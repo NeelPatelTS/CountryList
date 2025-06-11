@@ -16,7 +16,7 @@ enum Strings {
     }
 
     enum ButtonTitle {
-        static let retry = "Add"
+        static let add = "Add"
         static let ok = "OK"
     }
     
@@ -40,7 +40,7 @@ enum Strings {
 
     enum Placeholder {
         static let search = "Search countries"
-        static let noDataFound = "No data found"
+        static let noDataFound = "Tap the + button to add a country."
         static let loading = "Please wait..."
     }
     
@@ -50,6 +50,7 @@ enum Strings {
     
     enum alertTitle {
         static let selectionLimit = "Selection Limit"
+        static let error = "Error"
     }
     
 }

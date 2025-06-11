@@ -14,6 +14,7 @@ struct CountrySearchView: View {
     @Binding var path: [Route]
     @State private var showLimitAlert = false
     let countryAddLimit = 5
+    
     var filteredCountries: [Country] {
         if searchText.isEmpty {
             return viewModel.allCountries

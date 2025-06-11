@@ -16,24 +16,28 @@ struct FavouriteCountriesView: View {
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
-                List(viewModel.favcountries, id: \.self) { country in
-                    Button {
-                        path.append(.details(country))
-                    } label: {
-                        HStack {
-                            FavouriteCountrieCardCell(country: country)
-                            Button(action: {
-                                viewModel.toggleFavorite(for: country)
-                            }) {
-                                Image(systemName: "minus.circle.fill" )
-                                    .foregroundColor(.red)
+                if viewModel.favcountries.isEmpty && !viewModel.isLoading {
+                    EmptyStateView()
+                } else {
+                    List(viewModel.favcountries, id: \.self) { country in
+                        Button {
+                            path.append(.details(country))
+                        } label: {
+                            HStack {
+                                FavouriteCountrieCardCell(country: country)
+                                Button(action: {
+                                    viewModel.toggleFavorite(for: country)
+                                }) {
+                                    Image(systemName: "minus.circle.fill" )
+                                        .foregroundColor(.red)
+                                }
                             }
+                            
                         }
-                        
                     }
+                    .listStyle(.plain)
+                    Spacer()
                 }
-                .listStyle(.plain)
-                Spacer()
                 addButtonView
             }
             .navigationDestination(for: Route.self) { route in
@@ -54,19 +58,24 @@ struct FavouriteCountriesView: View {
             }
             .overlay {
                 if viewModel.isLoading && viewModel.favcountries.count == 0 {
-                    Color.black.opacity(0.50).ignoresSafeArea()
-                    ProgressView(Strings.Placeholder.loading)
+                    //Color.black.opacity(0.50).ignoresSafeArea()
+                    ProgressView {
+                        HStack{
+                            Image(systemName: "hand.raised")
+                            Text(Strings.Placeholder.loading)
+                        }
+                    }.controlSize(.extraLarge)
                 }
             }
             .onReceive(viewModel.$errorMessage) { message in
                 showError = message != nil
             }
-            .alert("Error", isPresented: $showError, actions: {
-                Button("OK", role: .cancel) {
-                    viewModel.errorMessage = nil  // clear after dismiss
+            .alert(Strings.alertTitle.error, isPresented: $showError, actions: {
+                Button(Strings.ButtonTitle.ok, role: .cancel) {
+                    viewModel.errorMessage = nil
                 }
             }, message: {
-                Text(viewModel.errorMessage ?? "Unknown error")
+                Text(viewModel.errorMessage ?? APIError.unowned.description)
             })
         }
     }
@@ -76,7 +85,9 @@ struct FavouriteCountriesView: View {
             path.append(.search)
         } label: {
             HStack {
-                Text("Add")
+                Image(systemName: "plus")
+                    .foregroundStyle(Color(UIColor.white))
+                Text(Strings.ButtonTitle.add)
                     .foregroundStyle(Color(UIColor.white))
                     .font(.system(size: 18, weight: .medium))
             }
@@ -87,5 +98,20 @@ struct FavouriteCountriesView: View {
         }
         .buttonStyle(.plain)
     }
+    
+    struct EmptyStateView: View {
+
+        var body: some View {
+            VStack {
+                Spacer()
+                Text(Strings.Placeholder.noDataFound)
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+    
 }
 
