@@ -81,13 +81,11 @@ class CountryListViewModel: ObservableObject {
             fetchRequest.predicate = NSPredicate(format: "id == %@", country.id)
 
             if let results = try? context.fetch(fetchRequest), let existingCountry = results.first {
-                // 🔄 Update existing record
                 existingCountry.name = country.name
                 existingCountry.capital = country.capital
                 merge(country.flags, into: existingCountry)
                 merge(country.currencies, into: existingCountry)
             } else {
-                // ✅ Save new record
                 let newCountry = CDCountry(context: context)
                 newCountry.id = country.id
                 newCountry.name = country.name
@@ -97,7 +95,6 @@ class CountryListViewModel: ObservableObject {
                 merge(country.currencies, into: newCountry)
             }
         }
-
         saveContext()
     }
     
@@ -110,22 +107,24 @@ class CountryListViewModel: ObservableObject {
     }
 
     private func merge(_ currencies: [Currency]?, into country: CDCountry) {
-        guard let currencies = currencies else { return }
-        
-        if let oldCurrencies = country.currencies {
-            country.removeFromCurrencies(oldCurrencies)
+        // Remove existing currencies
+        if let existing = country.currencies as? Set<CDCurrency> {
+            for currency in existing {
+                context.delete(currency)
+            }
         }
-        
-        
-        for currency in currencies {
-            let cdCurrency = CDCurrency(context: country.managedObjectContext!)
-            cdCurrency.code = currency.code
-            cdCurrency.currencyName = currency.name
-            cdCurrency.symbol = currency.symbol
-            country.addToCurrencies(cdCurrency)
+
+        // Add new currencies
+        currencies?.forEach { cur in
+            let cd = CDCurrency(context: context)
+            cd.code = cur.code
+            cd.currencyName = cur.name
+            cd.symbol = cur.symbol
+            country.addToCurrencies(cd)
         }
     }
-
+    
+    
     private func saveContext() {
         guard context.hasChanges else { return }
         do {

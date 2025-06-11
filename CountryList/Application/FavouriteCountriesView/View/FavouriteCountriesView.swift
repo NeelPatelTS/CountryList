@@ -34,7 +34,7 @@ struct FavouriteCountriesView: View {
                 }
                 .listStyle(.plain)
                 Spacer()
-                searchButtonView
+                addButtonView
             }
             .navigationDestination(for: Route.self) { route in
                 switch route {
@@ -54,12 +54,11 @@ struct FavouriteCountriesView: View {
             }
             .overlay {
                 if viewModel.isLoading && viewModel.favcountries.count == 0 {
-                    Color.black.opacity(0.25).ignoresSafeArea()
+                    Color.black.opacity(0.50).ignoresSafeArea()
                     ProgressView(Strings.Placeholder.loading)
                 }
             }
             .onReceive(viewModel.$errorMessage) { message in
-                // If message is not nil, show the alert
                 showError = message != nil
             }
             .alert("Error", isPresented: $showError, actions: {
@@ -72,17 +71,18 @@ struct FavouriteCountriesView: View {
         }
     }
     
-    private var searchButtonView: some View {
+    private var addButtonView: some View {
         Button {
             path.append(.search)
         } label: {
             HStack {
                 Text("Add")
+                    .foregroundStyle(Color(UIColor.white))
                     .font(.system(size: 18, weight: .medium))
             }
             .frame(maxWidth: .infinity, maxHeight: 50)
-            .foregroundColor(.white)
-            .background(Color.black.cornerRadius(5))
+            .background(Color(uiColor: .systemIndigo)
+                .cornerRadius(5))
             .padding(.horizontal,20)
         }
         .buttonStyle(.plain)

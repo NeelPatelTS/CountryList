@@ -20,7 +20,7 @@ extension CDCountry {
     @NSManaged public var name: String?
     @NSManaged public var capital: String?
     @NSManaged public var isFavourite: Bool
-    @NSManaged public var currencies: CDCurrency?
+    @NSManaged public var currencies: NSSet?
     @NSManaged public var flags: CDFlag?
 
 }

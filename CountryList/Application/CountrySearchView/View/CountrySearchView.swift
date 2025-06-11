@@ -12,12 +12,16 @@ struct CountrySearchView: View {
     @State private var searchText = ""
     @ObservedObject var viewModel: CountryListViewModel
     @Binding var path: [Route]
-    
+    @State private var showLimitAlert = false
+    let countryAddLimit = 5
     var filteredCountries: [Country] {
         if searchText.isEmpty {
             return viewModel.allCountries
         } else {
-            return viewModel.allCountries.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return viewModel.allCountries
+                .filter {
+                    $0.name.lowercased().contains(searchText.lowercased())
+                }
         }
     }
     
@@ -27,19 +31,35 @@ struct CountrySearchView: View {
                 path.append(.details(country))
             } label: {
                 HStack {
+                    let isFavourite = viewModel.isAlreadyFavourite(country)
                     FavouriteCountrieCardCell(country: country)
                     Button(action: {
-                        viewModel.toggleFavorite(for: country)
+                        if !isFavourite && viewModel.favcountries.count >= countryAddLimit {
+                            showLimitAlert.toggle()
+                        }else {
+                            viewModel.toggleFavorite(for: country)
+                        }
                     }) {
-                        let isFavourite = viewModel.isAlreadyFavourite(country)
-                        Image(systemName: isFavourite ? "minus.circle.fill" : "plus.circle.fill")
-                            .foregroundColor(isFavourite ? .red : .black)
+                        Image(
+                            systemName: isFavourite ? "minus.circle.fill" : "plus.circle.fill"
+                        )
+                        .foregroundColor(
+                            isFavourite ? .red : Color(UIColor.label)
+                        )
                     }
+                    .buttonStyle(.plain)
                 }
-                
             }
-        }.listStyle(.plain)
-            .navigationTitle("Countries")
-            .searchable(text: $searchText, prompt: "Search Countries")
+        }
+        .listStyle(.plain)
+        .navigationTitle(Strings.NavigationTitle.countries)
+        .searchable(text: $searchText, prompt: Strings.Placeholder.search)
+        .alert(Strings.alertTitle.selectionLimit, isPresented: $showLimitAlert) {
+            Button(Strings.ButtonTitle.ok, role: .cancel) {
+                showLimitAlert.toggle()
+            }
+        } message: {
+            Text(Strings.alertMessage.limtExceeded)
+        }
     }
 }

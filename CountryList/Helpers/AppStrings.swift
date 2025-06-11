@@ -12,10 +12,12 @@ enum Strings {
     enum NavigationTitle {
         static let favourite = "Favourite Countries"
         static let details = "Country Details"
+        static let countries = "Countries"
     }
 
     enum ButtonTitle {
         static let retry = "Add"
+        static let ok = "OK"
     }
     
     enum Title {
@@ -41,4 +43,13 @@ enum Strings {
         static let noDataFound = "No data found"
         static let loading = "Please wait..."
     }
+    
+    enum alertMessage {
+        static let limtExceeded = "You can only add 5 countries to favourite list."
+    }
+    
+    enum alertTitle {
+        static let selectionLimit = "Selection Limit"
+    }
+    
 }
