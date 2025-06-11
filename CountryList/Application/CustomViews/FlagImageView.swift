@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct FlagImageView: View {
+    
+    // MARK: - Properties
     let imageString: String?
 
+    // MARK: - Body
     var body: some View {
         if let urlString = imageString,
            let url = URL(string: urlString) {
@@ -23,7 +26,7 @@ struct FlagImageView: View {
                         .resizable()
                         .scaledToFit()
                 default:
-                    Image(systemName: "photo")
+                    Image(systemName: "photo.badge.exclamationmark.fill")
                         .resizable()
                         .scaledToFit()
                 }

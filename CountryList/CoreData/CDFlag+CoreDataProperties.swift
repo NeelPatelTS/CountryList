@@ -25,3 +25,12 @@ extension CDFlag {
 extension CDFlag : Identifiable {
 
 }
+
+extension CDFlag {
+    func toFlags() -> Flag {
+        return Flag(
+            svg: self.svg,
+            png: self.png
+        )
+    }
+}

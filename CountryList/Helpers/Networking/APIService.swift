@@ -7,13 +7,15 @@
 
 import Foundation
 
-import Foundation
-
+/// Protocol defining the required methods for API calls.
 protocol APIServiceProtocol {
+    /// Fetches all countries from the REST API.
     func fetchCountries() async throws -> [Country]
 }
 
 final class APIService: APIServiceProtocol {
+    
+    // MARK: - Fetch Countries API
     func fetchCountries() async throws -> [Country] {
         guard let url = URL(string: "https://restcountries.com/v2/all?fields=name,capital,currencies,flags") else {
             throw APIError.invalidPath

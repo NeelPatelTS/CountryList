@@ -8,6 +8,8 @@
 import Foundation
 
 enum APIError: Error, Equatable {
+    
+    // MARK: - Common API Error Cases
     case invalidPath
     case timeout
     case offline
@@ -23,6 +25,7 @@ enum APIError: Error, Equatable {
     case unowned
 }
 
+// MARK: - APIError Description
 extension APIError {
     
     /// API Error description

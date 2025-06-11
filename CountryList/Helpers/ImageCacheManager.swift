@@ -8,7 +8,11 @@
 import SwiftUI
 
 class ImageCacheManager {
+    
+    // MARK: - Private Cache Store
     static private var cache: [URL: Image] = [:]
+    
+    /// Static dictionary to store cached images using URL as the key
     static subscript(url: URL) -> Image? {
         get {
             ImageCacheManager.cache[url]

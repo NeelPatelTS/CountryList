@@ -7,8 +7,7 @@
 
 import Foundation
 
-import Foundation
-
+// MARK: - Country Model
 struct Country: Identifiable, Codable, Equatable, Hashable {
     var id: String { name } 
     let name: String
@@ -17,11 +16,13 @@ struct Country: Identifiable, Codable, Equatable, Hashable {
     let currencies: [Currency]?
 }
 
+// MARK: - Flag Model
 struct Flag: Codable, Equatable, Hashable {
     let svg: String?
     let png: String?
 }
 
+// MARK: - Currency Model
 struct Currency: Codable, Equatable, Hashable {
     let code: String?
     let name: String?

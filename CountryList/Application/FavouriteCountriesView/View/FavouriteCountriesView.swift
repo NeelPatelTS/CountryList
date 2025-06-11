@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct FavouriteCountriesView: View {
-    
+
+    // MARK: - State
+    @StateObject private var locationManager = LocationManager()
     @State private var path: [Route] = []
     @StateObject private var viewModel = CountryListViewModel()
     @State private var showError = false
     
+    // MARK: - View
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
@@ -70,6 +73,14 @@ struct FavouriteCountriesView: View {
             .onReceive(viewModel.$errorMessage) { message in
                 showError = message != nil
             }
+            .onReceive(locationManager.$country.compactMap { $0 }) { country in
+                viewModel.setDefaultFirstCountries(name: country)
+            }
+            .onReceive(locationManager.$authorizationStatus) { status in
+                if status == .denied {
+                    viewModel.setDefaultFirstCountries(name: "")
+                }
+            }
             .alert(Strings.alertTitle.error, isPresented: $showError, actions: {
                 Button(Strings.ButtonTitle.ok, role: .cancel) {
                     viewModel.errorMessage = nil
@@ -80,6 +91,7 @@ struct FavouriteCountriesView: View {
         }
     }
     
+    // MARK: - Add Button View
     private var addButtonView: some View {
         Button {
             path.append(.search)
@@ -99,6 +111,7 @@ struct FavouriteCountriesView: View {
         .buttonStyle(.plain)
     }
     
+    // MARK: - Empty State View
     struct EmptyStateView: View {
 
         var body: some View {

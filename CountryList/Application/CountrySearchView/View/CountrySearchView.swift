@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct CountrySearchView: View {
-    @Environment(\.dismiss) private var dismiss
+    
+    // MARK: - Environment & State
     @State private var searchText = ""
     @ObservedObject var viewModel: CountryListViewModel
     @Binding var path: [Route]
     @State private var showLimitAlert = false
-    let countryAddLimit = 5
+    private let countryAddLimit = 5
     
+    // MARK: - Filtered Search Results
     var filteredCountries: [Country] {
         if searchText.isEmpty {
             return viewModel.allCountries
@@ -26,6 +28,7 @@ struct CountrySearchView: View {
         }
     }
     
+    // MARK: - View Body
     var body: some View {
         List(filteredCountries) { country in
             Button {
@@ -55,6 +58,7 @@ struct CountrySearchView: View {
         .listStyle(.plain)
         .navigationTitle(Strings.NavigationTitle.countries)
         .searchable(text: $searchText, prompt: Strings.Placeholder.search)
+         // MARK: - Limit Alert
         .alert(Strings.alertTitle.selectionLimit, isPresented: $showLimitAlert) {
             Button(Strings.ButtonTitle.ok, role: .cancel) {
                 showLimitAlert.toggle()

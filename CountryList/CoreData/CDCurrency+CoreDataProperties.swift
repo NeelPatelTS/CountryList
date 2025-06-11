@@ -26,3 +26,13 @@ extension CDCurrency {
 extension CDCurrency : Identifiable {
 
 }
+
+extension CDCurrency {
+    func toCurrency() -> Currency {
+        return Currency(
+            code: self.code,
+            name: self.currencyName,
+            symbol: self.symbol
+        )
+    }
+}

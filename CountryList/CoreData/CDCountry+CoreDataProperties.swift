@@ -57,20 +57,3 @@ extension CDCountry {
         return Array(set)
     }
 }
-extension CDCurrency {
-    func toCurrency() -> Currency {
-        return Currency(
-            code: self.code,
-            name: self.currencyName,
-            symbol: self.symbol
-        )
-    }
-}
-extension CDFlag {
-    func toFlags() -> Flag {
-        return Flag(
-            svg: self.svg,
-            png: self.png
-        )
-    }
-}

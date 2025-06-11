@@ -15,6 +15,7 @@ struct CacheAsyncImage<Content>: View where Content: View {
     private let transaction: Transaction
     private let content: (AsyncImagePhase) -> Content
     
+    // MARK: - Initializer
     init(url: URL,
          scale: CGFloat = 1.0,
          transaction: Transaction = Transaction(),
@@ -38,6 +39,7 @@ struct CacheAsyncImage<Content>: View where Content: View {
         }
     }
     
+    // MARK: - Caching Helper
     private func cacheAndRender(phase: AsyncImagePhase) -> some View {
         if case .success (let image) = phase {
             ImageCacheManager[url] = image
