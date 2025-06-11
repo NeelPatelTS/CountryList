@@ -29,9 +29,22 @@
 		18CA36732DF8655400882727 /* CountryListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		18CA37782DF93AB700882727 /* Exceptions for "CountryList" folder in "CountryList" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 18CA36532DF8655200882727 /* CountryList */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		18CA36562DF8655200882727 /* CountryList */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				18CA37782DF93AB700882727 /* Exceptions for "CountryList" folder in "CountryList" target */,
+			);
 			path = CountryList;
 			sourceTree = "<group>";
 		};
@@ -72,6 +85,7 @@
 			children = (
 				18CA36562DF8655200882727 /* CountryList */,
 				18CA366C2DF8655400882727 /* CountryListTests */,
+				18CA37A52DF93C9000882727 /* Frameworks */,
 				18CA36552DF8655200882727 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,6 +98,13 @@
 				18CA36732DF8655400882727 /* CountryListUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		18CA37A52DF93C9000882727 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +207,8 @@
 			);
 			mainGroup = 18CA364B2DF8655200882727;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 18CA36552DF8655200882727 /* Products */;
 			projectDirPath = "";
@@ -389,6 +412,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CountryList/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CountryList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -417,6 +441,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CountryList/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CountryList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
