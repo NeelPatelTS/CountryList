@@ -18,14 +18,16 @@ struct DetailsView: View {
             VStack(alignment: .leading, spacing: 10) {
                 FlagImageView(imageString: country.flags?.png ?? "")
                     .frame(maxWidth: .infinity,maxHeight: 200)
-                Text(Strings.Title.country(country.name))
-                Text(Strings.Title.capital(country.capital))
-                Text(Strings.Title.currencyName(country.currencies?.first?.name))
-                Text(Strings.Title.symbol(country.currencies?.first?.symbol))
+                    .padding(.bottom,30)
+                Text(Strings.TextTitle.country).bold() + Text(country.name)
+                Text(Strings.TextTitle.capital).bold() + Text(country.capital ?? " - ")
+                Text(Strings.TextTitle.currencyName).bold() + Text(country.currencies?.first?.name ?? " - ")
+                Text(Strings.TextTitle.symbol).bold() + Text(country.currencies?.first?.symbol ?? " - ")
                 Spacer()
             }
             .padding()
-            .navigationTitle("Country Details").lineLimit(0)
+            .navigationTitle("Country Details")
+            .navigationBarTitleDisplayMode(.inline)
         }
         
     }

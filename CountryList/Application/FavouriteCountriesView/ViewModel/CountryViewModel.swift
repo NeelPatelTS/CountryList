@@ -78,7 +78,7 @@ class CountryListViewModel: ObservableObject {
     func getFavCountries(){
         let fetchRequest: NSFetchRequest<CDCountry> = CDCountry.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "isFavourite == true")
-        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         if let results = try? context.fetch(fetchRequest) {
             favcountries = results.map { $0.toCountry() }
         }

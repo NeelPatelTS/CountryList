@@ -23,23 +23,12 @@ enum Strings {
         static let ok = "OK"
     }
     
-    // MARK: - Info Titles (used in detail view)
-    enum Title {
-        static func symbol(_ value: String?) -> String {
-            "Symbol: \(value ?? " -")"
-        }
-        
-        static func currencyName(_ value: String?) -> String {
-            "Currency: \(value ?? " -")"
-        }
-        
-        static func capital(_ value: String?) -> String {
-            "Capital: \(value ?? " -")"
-        }
-        
-        static func country(_ name: String) -> String {
-            "Name: \(name)"
-        }
+    // MARK: - Info Titles
+    enum TextTitle {
+        static let symbol = "Symbol: "
+        static let currencyName = "Currency: "
+        static let capital = "Capital: "
+        static let country =  "Name: "
     }
     
     // MARK: - Placeholders

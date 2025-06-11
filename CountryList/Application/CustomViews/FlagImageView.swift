@@ -30,7 +30,7 @@ struct FlagImageView: View {
                         .resizable()
                         .scaledToFit()
                 }
-            }
+            }.shadow(color: .black.opacity(0.5), radius: 5, x: 3, y: 3)
         } else {
             Image(systemName: "photo.badge.exclamationmark.fill")
                 .resizable()
