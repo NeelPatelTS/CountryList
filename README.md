@@ -27,6 +27,6 @@ This is a demo SwiftUI app showcasing:
 - Swift 5.5+
 - Core Data enabled
 
-# ScreenShot
+# Quick video
 
-![Image](https://github.com/user-attachments/assets/65311569-a505-4be9-8e8f-97f8add45f7a) 
+![Image](https://github.com/user-attachments/assets/48b58ae8-9c07-4ab7-8922-10fb7236f489)
